@@ -56,8 +56,6 @@ export default {
                 this.errors = [];
                 if (!this.articleTitle) this.errors.push({type: 'title', message : 'Title Required'});
                 if (!this.articleBody) this.errors.push({type: 'body', message : 'Body Required'});
-
-                console.log(this.titleError);
             }
         }
     },

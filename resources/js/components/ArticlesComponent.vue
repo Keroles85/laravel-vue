@@ -54,7 +54,7 @@
       <div class="card-body">
         <h3 class="card-title">{{ article.title }}</h3>
         <p class="card-text">{{ article.body }}.</p>
-        <a href="#" class="btn btn-primary" @click="editArticle(article)" data-toggle="modal" data-target="#editArticle">Edit</a>
+        <a href="#" @click="editArticle(article)" class="btn btn-primary" data-toggle="modal" data-target="#editArticle">Edit</a>
         <a href="#" @click="deleteArticle(article)" class="btn btn-danger">delete</a>
       </div>
     </div>
