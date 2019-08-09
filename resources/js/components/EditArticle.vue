@@ -62,10 +62,12 @@ export default {
 
     computed: {
         titleError() {
+            //return true if errors has title error
             return this.errors.some(error => error.type == 'title');
         },
 
         bodyError() {
+            //return true if errors has body error
             return this.errors.some(error => error.type == 'body');
         }
     }
