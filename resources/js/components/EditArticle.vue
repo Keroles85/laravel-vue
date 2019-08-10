@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <form>
             <div :class="{ 'invalid-feedback d-block' : errors.length }" v-if="errors.length">
                 <b>Please fix the following error(s):</b>
@@ -18,7 +17,6 @@
             </div>
             <button class="btn btn-primary" @click.prevent="onSubmit">Submit</button>
         </form>
-
     </div>
 </template>
 

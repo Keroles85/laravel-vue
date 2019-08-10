@@ -1778,6 +1778,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1826,8 +1847,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       axios.post('/api/articles', article).then(function (response) {
-        alert('Post successfully added');
         $('#createArticle').modal('hide');
+        bootbox.alert("Article added successfully...");
 
         _this2.fetchArticles();
       })["catch"](function (err) {
@@ -1837,13 +1858,13 @@ __webpack_require__.r(__webpack_exports__);
     deleteArticle: function deleteArticle(article) {
       var _this3 = this;
 
-      if (confirm("Are you Sure?")) {
-        axios["delete"]("api/articles/".concat(article.id)).then(function (response) {
-          alert("Article Deleted");
-
-          _this3.fetchArticles();
-        });
-      }
+      bootbox.confirm("Are you sure!", function (result) {
+        if (result) {
+          axios["delete"]("api/articles/".concat(article.id)).then(function (response) {
+            _this3.fetchArticles();
+          });
+        }
+      });
     },
     editArticle: function editArticle(article) {
       /* axios.get(`api/articles/${article.id}/edit`).then(response => {
@@ -1860,8 +1881,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       axios.patch("api/articles/".concat(article.id), article).then(function (response) {
-        alert('Post successfully updated');
         $('#editArticle').modal('hide');
+        bootbox.alert("Article updated successfully...");
 
         _this4.fetchArticles();
       })["catch"](function (err) {
@@ -1992,8 +2013,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['id', 'title', 'body'],
   data: function data() {
@@ -2035,11 +2054,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     titleError: function titleError() {
+      //return true if errors has title error
       return this.errors.some(function (error) {
         return error.type == 'title';
       });
     },
     bodyError: function bodyError() {
+      //return true if errors has body error
       return this.errors.some(function (error) {
         return error.type == 'body';
       });
@@ -38114,47 +38135,6 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "modal fade",
-          attrs: {
-            id: "editArticle",
-            tabindex: "-1",
-            role: "dialog",
-            "aria-labelledby": "editArticleLabel",
-            "aria-hidden": "true"
-          }
-        },
-        [
-          _c(
-            "div",
-            { staticClass: "modal-dialog", attrs: { role: "document" } },
-            [
-              _c("div", { staticClass: "modal-content" }, [
-                _vm._m(2),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "modal-body" },
-                  [
-                    _c("edit-article", {
-                      attrs: {
-                        id: _vm.article.id,
-                        title: _vm.article.title,
-                        body: _vm.article.body
-                      },
-                      on: { "article-update": _vm.updateArticle }
-                    })
-                  ],
-                  1
-                )
-              ])
-            ]
-          )
-        ]
-      ),
-      _vm._v(" "),
       _vm._l(_vm.articles, function(article) {
         return _c(
           "div",
@@ -38204,6 +38184,49 @@ var render = function() {
           ]
         )
       }),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "editArticle",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "editArticleLabel",
+            "aria-hidden": "true"
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _vm._m(2),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "modal-body" },
+                  [
+                    _c("edit-article", {
+                      attrs: {
+                        id: _vm.article.id,
+                        title: _vm.article.title,
+                        body: _vm.article.body
+                      },
+                      on: { "article-update": _vm.updateArticle }
+                    })
+                  ],
+                  1
+                )
+              ])
+            ]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _vm._m(3),
       _vm._v(" "),
       _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
         _c("ul", { staticClass: "pagination" }, [
@@ -38340,6 +38363,61 @@ var staticRenderFns = [
         [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
       )
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "deleteArticle",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "deleteArticleLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    staticClass: "modal-title",
+                    attrs: { id: "deleteArticleLabel" }
+                  },
+                  [_vm._v("Delete Article")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Cancel")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  { staticClass: "btn btn-success", attrs: { type: "button" } },
+                  [_vm._v("Confirm")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
   }
 ]
 render._withStripped = true

@@ -27,7 +27,9 @@
 
     </div>
 
-    <!-- Vue - JS -->
+    <!-- Scripts  -->
     <script src="{{ asset('js/app.js') }}"></script>
+
+    <script src="{{ asset('js/bootbox.min.js') }}"></script>
 </body>
 </html>

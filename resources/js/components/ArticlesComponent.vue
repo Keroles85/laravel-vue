@@ -27,36 +27,57 @@
       </div>
     </div>
 
-    <!-- Edit article Modal -->
-    <div class="modal fade" id="editArticle" tabindex="-1" role="dialog" aria-labelledby="editArticleLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editArticleLabel">Edit Article</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <edit-article
-                    :id="article.id"
-                    :title="article.title"
-                    :body="article.body"
-                    @article-update="updateArticle"
-                ></edit-article>
-            </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Articles Cards -->
     <div v-for="article in articles" :key="article.id" class="card mb-3 shadow-sm">
-      <div class="card-body">
-        <h3 class="card-title">{{ article.title }}</h3>
-        <p class="card-text">{{ article.body }}.</p>
-        <a href="#" @click="editArticle(article)" class="btn btn-primary" data-toggle="modal" data-target="#editArticle">Edit</a>
-        <a href="#" @click="deleteArticle(article)" class="btn btn-danger">delete</a>
-      </div>
+        <div class="card-body">
+            <h3 class="card-title">{{ article.title }}</h3>
+            <p class="card-text">{{ article.body }}.</p>
+            <a href="#" @click="editArticle(article)" class="btn btn-primary" data-toggle="modal" data-target="#editArticle">Edit</a>
+            <a href="#" @click="deleteArticle(article)" class="btn btn-danger">delete</a>
+        </div>
+    </div>
+
+    <!-- Edit article Modal -->
+    <div class="modal fade" id="editArticle" tabindex="-1" role="dialog" aria-labelledby="editArticleLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editArticleLabel">Edit Article</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <edit-article
+                        :id="article.id"
+                        :title="article.title"
+                        :body="article.body"
+                        @article-update="updateArticle"
+                    ></edit-article>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteArticle" tabindex="-1" role="dialog" aria-labelledby="deleteArticleLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteArticleLabel">Delete Article</h5>
+                </div>
+                <!-- <form id="delete-form" action="/cities/{{ $city->id }}" method="POST"
+                    style="display: inline">
+                    @method('DELETE')
+                    @csrf
+                </form> -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success">Confirm</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Bootstrap Pagination -->
@@ -129,19 +150,20 @@ export default {
 
     addArticle(article) {
         axios.post('/api/articles', article).then(response=> {
-            alert('Post successfully added');
             $('#createArticle').modal('hide');
+            bootbox.alert("Article added successfully...");
             this.fetchArticles();
         }).catch(err => console.log(err));
     },
 
     deleteArticle(article) {
-      if (confirm("Are you Sure?")) {
-        axios.delete(`api/articles/${article.id}`).then(response => {
-          alert("Article Deleted");
-          this.fetchArticles();
+        bootbox.confirm("Are you sure!", result => {
+            if(result) {
+                axios.delete(`api/articles/${article.id}`).then(response => {
+                    this.fetchArticles();
+                });
+            }
         });
-      }
     },
 
     editArticle(article) {
@@ -158,8 +180,8 @@ export default {
 
     updateArticle(article) {
         axios.patch(`api/articles/${article.id}`, article).then(response => {
-            alert('Post successfully updated');
             $('#editArticle').modal('hide');
+            bootbox.alert("Article updated successfully...");
             this.fetchArticles();
         }).catch(err => console.log(err));
     }
